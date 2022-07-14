@@ -1,18 +1,48 @@
 import 'package:flutter/material.dart';
+import './questions.dart';
+
+//https://docs.flutter.dev/release/breaking-changes/buttons
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+   return MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp> {
+  var initialIndex = 0;
+
+  void answeredQuestions(int a){
+    setState(() {
+       initialIndex = initialIndex + 1;
+    });
+    print(initialIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
+  
+    var questions = ['what\'s your name?', 'what\'s yout favourit color?','what\'s yout hobby?'];
     return MaterialApp(
         home: Scaffold(
       // appBar: AppBar(
       //   title: Text("My First App"),
       // ),
-      body: SafeArea(child: Text("my body text")),
+      body: SafeArea(
+          child: Column(
+        children: [
+          Questions(questions[initialIndex]),
+          ElevatedButton(child: Text('Answered one!'),onPressed: () => answeredQuestions(5),),
+          RaisedButton(child: Text('Answered two!'),onPressed: ()=> answeredQuestions(7),),
+
+
+        ],
+      )),
     ));
   }
 }
