@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './questions.dart';
-
+import './answer.dart';
 //https://docs.flutter.dev/release/breaking-changes/buttons
 
 void main() {
@@ -39,7 +39,7 @@ class MyAppState extends State<MyApp> {
           Questions(questions[initialIndex]),
           ElevatedButton(child: Text('Answered one!'),onPressed: () => answeredQuestions(5),),
           RaisedButton(child: Text('Answered two!'),onPressed: ()=> answeredQuestions(7),),
-
+          Answer(),
 
         ],
       )),
