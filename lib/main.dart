@@ -3,6 +3,7 @@ import './questions.dart';
 import './answer.dart';
 import './result.dart';
 import './Quiz.dart';
+import './buttonList.dart';
 //https://docs.flutter.dev/release/breaking-changes/buttons
 
 void main() {
@@ -77,9 +78,10 @@ class MyAppState extends State<MyApp> {
         title: Text("My First App"),
       ),
       body: SafeArea(
-          child: initialIndex < questions.length
-              ? Quiz(questions, answeredQuestions, initialIndex)
-              : Result(_totalScore,_resetQuiz)),
+         child: ButtonList()),
+          // child: initialIndex < questions.length
+          //     ? Quiz(questions, answeredQuestions, initialIndex)
+          //     : Result(_totalScore,_resetQuiz)),
     ));
   }
 }
