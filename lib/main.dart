@@ -7,42 +7,63 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget{
+class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-   return MyAppState();
+    return MyAppState();
   }
 }
 
 class MyAppState extends State<MyApp> {
+  final questions = const [
+    {
+      'QuestionText': 'What\'s your favourit animal?',
+      'Answers': ['Rabbit', 'Lion', 'Dog', 'Cat']
+    },
+    {
+      'QuestionText': 'What\'s yout favourit color?',
+      'Answers': ['Red', 'Green', 'Blue', 'Black']
+    },
+    {
+      'QuestionText': 'What\'s yout hobby?',
+      'Answers': ['Running', 'Play', 'Dance', 'Reading']
+    },
+  ];
+
   var initialIndex = 0;
 
-  void answeredQuestions(int a){
+  void answeredQuestions(int a) {
     setState(() {
-       initialIndex = initialIndex + 1;
+      initialIndex = initialIndex + 1;
     });
-    print(initialIndex);
+
+    if (initialIndex < questions.length) {
+      print("Queation counter increase");
+    } else {
+      print("Done");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-  
-    var questions = ['what\'s your name?', 'what\'s yout favourit color?','what\'s yout hobby?'];
     return MaterialApp(
         home: Scaffold(
-      // appBar: AppBar(
-      //   title: Text("My First App"),
-      // ),
+      appBar: AppBar(
+        title: Text("My First App"),
+      ),
       body: SafeArea(
-          child: Column(
-        children: [
-          Questions(questions[initialIndex]),
-          ElevatedButton(child: Text('Answered one!'),onPressed: () => answeredQuestions(5),),
-          RaisedButton(child: Text('Answered two!'),onPressed: ()=> answeredQuestions(7),),
-          Answer(),
-
-        ],
-      )),
+          child: initialIndex < questions.length
+              ? Column(
+                  children: [
+                    Questions(
+                        questions[initialIndex]["QuestionText"] as String),
+                    ...(questions[initialIndex]["Answers"] as List<String>)
+                        .map((answer) {
+                      return Answer(answeredQuestions, answer);
+                    }),
+                  ],
+                )
+              : Center(child: Text("You did it!"))),
     ));
   }
 }
