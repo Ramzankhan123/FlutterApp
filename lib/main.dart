@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './questions.dart';
 import './answer.dart';
+import './result.dart';
+import './Quiz.dart';
 //https://docs.flutter.dev/release/breaking-changes/buttons
 
 void main() {
@@ -18,25 +20,48 @@ class MyAppState extends State<MyApp> {
   final questions = const [
     {
       'QuestionText': 'What\'s your favourit animal?',
-      'Answers': ['Rabbit', 'Lion', 'Dog', 'Cat']
+      'Answers': [
+        {'text': 'Rabbit', 'score': 5},
+        {'text': 'Lion', 'score': 2},
+        {'text': 'Dog', 'score': 3},
+        {'text': 'Cat', 'score': 19}
+      ]
     },
     {
       'QuestionText': 'What\'s yout favourit color?',
-      'Answers': ['Red', 'Green', 'Blue', 'Black']
+      'Answers': [
+        {'text': 'Red', 'score': 1},
+        {'text': 'Green', 'score': 3},
+        {'text': 'Blue', 'score': 3},
+        {'text': 'Black', 'score': 3}
+      ]
     },
     {
       'QuestionText': 'What\'s yout hobby?',
-      'Answers': ['Running', 'Play', 'Dance', 'Reading']
+      'Answers': [
+        {'text': 'Running', 'score': 5},
+        {'text': 'Play', 'score': 1},
+        {'text': 'Dance', 'score': 3},
+        {'text': 'Reading', 'score': 3}
+      ]
     },
   ];
 
   var initialIndex = 0;
+  var _totalScore = 0;
 
+  void _resetQuiz(){
+    setState(() {
+      initialIndex = 0;
+      _totalScore = 0;
+    });
+  }
   void answeredQuestions(int a) {
+    print(a);
     setState(() {
       initialIndex = initialIndex + 1;
     });
-
+    _totalScore = _totalScore + a;
     if (initialIndex < questions.length) {
       print("Queation counter increase");
     } else {
@@ -53,17 +78,8 @@ class MyAppState extends State<MyApp> {
       ),
       body: SafeArea(
           child: initialIndex < questions.length
-              ? Column(
-                  children: [
-                    Questions(
-                        questions[initialIndex]["QuestionText"] as String),
-                    ...(questions[initialIndex]["Answers"] as List<String>)
-                        .map((answer) {
-                      return Answer(answeredQuestions, answer);
-                    }),
-                  ],
-                )
-              : Center(child: Text("You did it!"))),
+              ? Quiz(questions, answeredQuestions, initialIndex)
+              : Result(_totalScore,_resetQuiz)),
     ));
   }
 }
